@@ -51,8 +51,11 @@ Firmware_Diy() {
 	# ${FEEDS_PKG}			OpenWrt 源码目录下的 package/feeds/packages 目录
 	# ${BASE_FILES}			OpenWrt 源码目录下的 package/base-files/files 目录
 
-
-cat > package/base-files/files/etc/banner << EOF
+	case "${OP_AUTHOR}/${OP_REPO}:${OP_BRANCH}" in
+	hanwckf/immortalwrt-mt798x*)
+		case "${TARGET_PROFILE}" in
+		xiaomi_redmi-router-ax6000 | xiaomi_redmi-router-ax6000_2102)
+			cat > package/base-files/files/etc/banner << EOF
   _______                     ________        __
  |       |.-----.-----.-----.|  |  |  |.----.|  |_
  |   -   ||  _  |  -__|     ||  |  |  ||   _||   _|
@@ -307,6 +310,25 @@ cp ${GITHUB_WORKSPACE}/_modFiles/bg1.jpg feeds/luci/themes/luci-theme-argon/htdo
 
 # ## Enable Cache
 # echo -e 'CONFIG_DEVEL=y\nCONFIG_CCACHE=y' >> .config
+			
+			# AddPackage passwall xiaorouji openwrt-passwall main
+			# AddPackage other sbwml luci-app-mosdns v5
+   			# rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
+			# rm -r ${FEEDS_LUCI}/luci-app-passwall
+			# patch < ${CustomFiles}/mt7981/0001-Add-iptables-socket.patch -p1 -d ${WORK}
+			# rm -r ${WORK}/package/network/services/dnsmasq
+			# Copy ${CustomFiles}/dnsmasq ${WORK}/package/network/services
 
+			# mosdns_version="5.3.1"
+			# wget --quiet --no-check-certificate -P /tmp \
+				# https://github.com/IrineSistiana/mosdns/releases/download/v${mosdns_version}/mosdns-linux-arm64.zip
+			# unzip /tmp/mosdns-linux-arm64.zip -d /tmp
+			# Copy /tmp/mosdns ${BASE_FILES}/usr/bin
+			# chmod +x ${BASE_FILES}/usr/bin
+			# sed -i "s?+mosdns ??g" ${WORK}/package/other/luci-app-mosdns/luci-app-mosdns/Makefile
+		;;
+		esac
+	;;
+	esac
 
 }
