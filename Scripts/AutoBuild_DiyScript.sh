@@ -102,7 +102,7 @@ git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/l
 # rm -rf feeds/packages/net/alist
 # rm -rf feeds/luci/applications/luci-app-alist
 # alist 3.36 requires go 1.22
-# git clone https://github.com/sbwml/luci-app-alist.git package/diy/alist
+# git clone https://github.com/sbwml/luci-app-alist.git feeds/packages/net/alist
 
 ## customize alist ver
 # sleep 1
@@ -128,9 +128,8 @@ curl -sL -m 30 --retry 2 "$urldl" -o package/diy/luci-app-ikoolproxy/root/usr/sh
 # ## ---------------------------------------------------------
 
 # ## -------------- lucky ---------------------------
-rm -rf feeds/packages/net/lucky
-rm -rf feeds/luci/applications/luci-app-lucky
-_luci-i18n-qos-zh-cn=y
+# rm -rf feeds/packages/net/lucky
+# rm -rf feeds/luci/applications/luci-app-lucky
 # #/etc/config/lucky.daji/lucky.conf
 git clone https://github.com/gdy666/luci-app-lucky.git package/diy/lucky
 sleep 1
@@ -140,8 +139,8 @@ sleep 1
 # sed -i 's/PKG_VERSION:=.*/PKG_VERSION:='"$lkver"'/g;s/github.com\/gdy666\/lucky\/releases\/download\/v/www.daji.it\:6\/files\//g' package/diy/lucky/lucky/Makefile
 
 # wget https://github.com/gdy666/lucky-files$(PKG_VERSION)/$(PKG_NAME)_$(PKG_VERSION)_Linux_$(LUCKY_ARCH).tar.gz
-# lkver=2.10.8
-# sed -i 's/PKG_VERSION:=.*/PKG_VERSION:='"$lkver"'/g;s/lucky\/releases\/download\/v/lucky-files\/raw\/main\//g' package/diy/lucky/lucky/Makefile
+lkver=2.10.8
+sed -i 's/PKG_VERSION:=.*/PKG_VERSION:='"$lkver"'/g;s/lucky\/releases\/download\/v/lucky-files\/raw\/main\//g' package/diy/lucky/lucky/Makefile
 
    #/etc/lucky/lucky.conf
 # git clone https://github.com/sirpdboy/luci-app-lucky.git package/diy/lucky
