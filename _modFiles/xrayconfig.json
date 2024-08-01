@@ -1,0 +1,36 @@
+{
+"inbounds":[
+    {
+      "port": 52345,
+      "protocol": "dokodemo-door",
+      "listen": "0.0.0.0",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ],
+        "metadataOnly": false,
+        "domainsExcluded": [
+          "mijia cloud",
+          "Mijia Cloud",
+          "api.ai.xiaomi.com",
+          "i.ai.xiaomi.com",
+          "courier.push.apple.com",
+          "ot.io.mi.com",
+          "dlg.io.mi.com"
+        ]
+      },
+      "settings": {
+        "network": "tcp,udp",
+        "followRedirect": true
+      },
+      "streamSettings": {
+        "sockopt": {
+          "tproxy": "tproxy"
+        }
+      },
+      "tag": "transparent"
+    }
+]
+}
