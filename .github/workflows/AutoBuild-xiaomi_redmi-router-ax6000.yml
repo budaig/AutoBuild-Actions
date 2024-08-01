@@ -197,16 +197,16 @@ jobs:
     - name: Pre-download Libraries
       run: |
         cd openwrt
-        ./scripts/feeds install -f -a
-        make -f defconfig
-        make download -f -j8
+        # ./scripts/feeds install -f -a
+        make defconfig
+        make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
 
     - name: Build OpenWrt
       run: |
         cd openwrt
-        make -j4 || make -j1 V=s
+        make -j$(nproc) || make -j1 || make -j1 V=s
         [ "$?" == 0 ] && echo "Compile_Result=true" >> $GITHUB_ENV || echo "Compile_Result=false" >> $GITHUB_ENV
 
     - name: Checkout Firmware
