@@ -39,7 +39,7 @@ on:
 ### 环境变量设置
 env:
 # 编译时调用的 [.config] 文件名称
-  CONFIG_FILE: xiaomi_redmi-router-ax6000
+  CONFIG_FILE: xiaomi_redmi-router-ax6000_2305
 # 源码仓库:分支
   DEFAULT_SOURCE: immortalwrt/immortalwrt:openwrt-23.05
 # 上传固件到 Github Releases
@@ -53,7 +53,7 @@ env:
 # 删除早期的 workflow 任务
   DELETE_OLD_WORKFLOW: false
 # Cache 加速编译
-  CACHE_ACCELERATE: true
+  CACHE_ACCELERATE: false
 ### 结束
 ### 请按需求修改以上内容
 
@@ -88,17 +88,17 @@ jobs:
         # npm_clean: "True"
         # os_swap: "True"
 
-    # - name: Free up disk space
-      # if: env.DELETE_USELESS_FILES == 'true' && !cancelled()
-      # uses: easimon/maximize-build-space@master
-      # with: 
-        # root-reserve-mb: 2048
-        # swap-size-mb: 1
-        # remove-dotnet: 'true'
-        # remove-android: 'true'
-        # remove-haskell: 'true'
-        # remove-codeql: 'true'
-        # remove-docker-images: 'true'
+    - name: Free up disk space
+      if: env.DELETE_USELESS_FILES == 'true' && !cancelled()
+      uses: easimon/maximize-build-space@master
+      with: 
+        root-reserve-mb: 2048
+        swap-size-mb: 1
+        remove-dotnet: 'true'
+        remove-android: 'true'
+        remove-haskell: 'true'
+        remove-codeql: 'true'
+        remove-docker-images: 'true'
 
     - name: Checkout
       uses: actions/checkout@main
@@ -185,7 +185,7 @@ jobs:
             echo -e "\nCONFIG_DEVEL=y\nCONFIG_CCACHE=y\n" >> $GITHUB_WORKSPACE/Configs/$CONFIG_FILE
         fi
         cp $GITHUB_WORKSPACE/Configs/$CONFIG_FILE .config
-        source $GITHUB_WORKSPACE/Scripts/AutoBuild_DiyScript.sh
+        source $GITHUB_WORKSPACE/Scripts/AutoBuild_DiyScript_ax6k2305.sh
         source $GITHUB_WORKSPACE/Scripts/AutoBuild_Function.sh
         make defconfig
         Firmware_Diy_Start
@@ -197,16 +197,14 @@ jobs:
     - name: Pre-download Libraries
       run: |
         cd openwrt
-        # ./scripts/feeds install -f -a
+        ./scripts/feeds install -a
         make defconfig
         make download -j8
-        find dl -size -1024c -exec ls -l {} \;
-        find dl -size -1024c -exec rm -f {} \;
 
     - name: Build OpenWrt
       run: |
         cd openwrt
-        make -j$(nproc) || make -j1 || make -j1 V=s
+        make -j4 || make -j1 V=s
         [ "$?" == 0 ] && echo "Compile_Result=true" >> $GITHUB_ENV || echo "Compile_Result=false" >> $GITHUB_ENV
 
     - name: Checkout Firmware
@@ -260,4 +258,4 @@ jobs:
       if: env.DELETE_OLD_WORKFLOW == 'true' && !cancelled()
       with:
         retain_days: 1
-        keep_minimum_runs: 3
+        keep_minimum_runs: 8
