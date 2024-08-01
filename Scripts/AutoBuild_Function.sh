@@ -98,6 +98,7 @@ Firmware_Diy_Start() {
 	cat >> ${GITHUB_ENV} <<EOF
 WORK=${WORK}
 CONFIG_TEMP=${CONFIG_TEMP}
+CONFIG_FILE=${CONFIG_FILE}
 AutoBuild_Features=${AutoBuild_Features}
 x86_Full_Images=${x86_Full_Images}
 AutoBuild_Fw=${AutoBuild_Fw}
@@ -169,8 +170,8 @@ EOF
 				sed -i "s?${zzz_Default_Version}?${zzz_Default_Version} @ ${Author} [${Display_Date}]?g" ${Version_File}
 			fi
 		;;
-		immortalwrt/immortalwrt | padavanonly/immortalwrtARM)
-			Copy ${CustomFiles}/Depends/openwrt_release_${OP_AUTHOR} ${BASE_FILES}/etc openwrt_release
+		immortalwrt/immortalwrt | padavanonly/immortalwrtARM | hanwckf/immortalwrt-mt798x)
+			Copy ${CustomFiles}/Depends/openwrt_release_immortalwrt ${BASE_FILES}/etc openwrt_release
 			if [[ -n ${TARGET_FLAG} ]]
 			then
 				sed -i "s?ImmortalWrt?ImmortalWrt ${TARGET_FLAG} @ ${Author} [${Display_Date}]?g" ${Version_File}
@@ -244,6 +245,9 @@ EOF
 			;;
 			padavanonly/immortalwrtARM*)
 				Patch_Path=${CustomFiles}/Patches/padavanonly-immortalwrtARM
+			;;
+			hanwckf/immortalwrt-mt798x*)
+				Patch_Path=${CustomFiles}/Patches/immortalwrt-mt798x
 			;;
 			esac
 			if [[ -d ${Patch_Path} ]]
