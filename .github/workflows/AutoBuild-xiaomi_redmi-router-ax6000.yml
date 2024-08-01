@@ -197,7 +197,7 @@ jobs:
     - name: Pre-download Libraries
       run: |
         cd openwrt
-        ./scripts/feeds install -a -f
+        ./scripts/feeds install -f -a
         make defconfig
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
