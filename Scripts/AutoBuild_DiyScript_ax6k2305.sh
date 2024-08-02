@@ -180,7 +180,7 @@ sed -i 's/PKG_VERSION:=.*/PKG_VERSION:='"$v2aver"'/g;s/PKG_HASH:=.*/PKG_HASH:='"
 # fix mijia cloud wrong dns (use xraycore)-------
 cp ${GITHUB_WORKSPACE}/_modFiles/v2raya.init package/diy/v2raya/v2raya/files/v2raya.init
 mkdir -p package/diy/v2raya/luci-app-v2raya/root/etc/v2raya/xray
-cp ${GITHUB_WORKSPACE}/_modFiles/xrayconfig.json package/diy/v2raya/luci-app-v2raya/root/etc/v2raya/xray/config.json
+cp ${GITHUB_WORKSPACE}/_modFiles/xrayconf.json package/diy/v2raya/luci-app-v2raya/root/etc/v2raya/xray/config.json
 
 # ##  -------------- xray ---------------------------
 git clone https://github.com/yichya/openwrt-xray package/diy/openwrt-xray
@@ -188,7 +188,7 @@ git clone https://github.com/yichya/openwrt-xray-geodata-cut package/diy/openwrt
 # mkdir -p package/diy/openwrt-xray/root/etc/init.d
 # cp ${GITHUB_WORKSPACE}/_modFiles/xray.init package/diy/openwrt-xray/root/etc/init.d/xray
 # mkdir -p package/diy/openwrt-xray/root/usr/share/xray
-# cp ${GITHUB_WORKSPACE}/_modFiles/xraycfg.json package/diy/openwrt-xray/root/usr/share/xray/xraycfg.json
+# cp ${GITHUB_WORKSPACE}/_modFiles/xraycfg.cst package/diy/openwrt-xray/root/usr/share/xray/xraycfg.json
 
 # ##  -------------- luci app xray ---------------------------
 # use yicha xray status for 22.03 or up---------------
