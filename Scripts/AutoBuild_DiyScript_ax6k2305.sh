@@ -193,22 +193,6 @@ git clone https://github.com/yichya/openwrt-xray package/diy/openwrt-xray
 # echo xray $xrver sha256=$xrsha256
 # sed -i '4 s/.*/PKG_VERSION:='"$xrver"'/g;12 s/.*/PKG_HASH:='"$xrsha256"'/g' package/diy/oepnwrt-xray/Makefile
 
-## 不安装v2raya 借用smartdns配置文件夹安装xrayconfig
-mkdir -p package/diy/luci-app-smartdns/root/etc/init.d || echo "Failed to create /luci-app-smartdns/root/etc/init.d"
-cp -f ${GITHUB_WORKSPACE}/_modFiles/xray.init package/diy/luci-app-smartdns/root/etc/init.d/xray
-if [ $? -eq 0 ]; then
-    echo "xrayint copied"
-else
-    echo "xrayint copy failed"
-fi
-mkdir -p package/diy/luci-app-smartdns/root/etc/xray || echo "Failed to create /luci-app-smartdns/root/etc/xray"
-cp -f ${GITHUB_WORKSPACE}/_modFiles/xraycfg.cst package/diy/luci-app-smartdns/root/etc/xray/xraycfg.json
-if [ $? -eq 0 ]; then
-    echo "xraycfg copied"
-else
-    echo "xraycfg copy failed"
-fi
-
 # ##  -------------- luci app xray ---------------------------
 # use yicha xray status for 22.03 or up---------------
 # git clone https://github.com/yichya/luci-app-xray package/diy/luci-app-status
@@ -246,6 +230,23 @@ mv /tmp/reject.conf package/diy/luci-app-smartdns/root/etc/smartdns/reject.conf 
 urlgthosts="https://raw.githubusercontent.com/hululu1068/AdRules/main/rules/github-hosts.conf"
 curl -sL -m 30 --retry 2 "$urlgthosts" -o package/diy/luci-app-smartdns/root/etc/smartdns/domain-set/gthosts.conf
 # ls -l package/diy/luci-app-smartdns/root/etc/smartdns
+
+## 若不安装v2raya 则借用smartdns配置文件夹安装xrayconfig
+mkdir -p package/diy/luci-app-smartdns/root/etc/init.d || echo "Failed to create /luci-app-smartdns/root/etc/init.d"
+cp -f ${GITHUB_WORKSPACE}/_modFiles/xray.init package/diy/luci-app-smartdns/root/etc/init.d/xray
+if [ $? -eq 0 ]; then
+    echo "xrayint copied"
+else
+    echo "xrayint copy failed"
+fi
+mkdir -p package/diy/luci-app-smartdns/root/etc/xray || echo "Failed to create /luci-app-smartdns/root/etc/xray"
+cp -f ${GITHUB_WORKSPACE}/_modFiles/xraycfg.cst package/diy/luci-app-smartdns/root/etc/xray/xraycfg.json
+if [ $? -eq 0 ]; then
+    echo "xraycfg copied"
+else
+    echo "xraycfg copy failed"
+fi
+
 # ## ---------------------------------------------------------
 
 # ## replace a theme
