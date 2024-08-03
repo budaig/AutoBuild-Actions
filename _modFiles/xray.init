@@ -3,8 +3,8 @@ DESCRIPTION="简单好用的xray"
 
 PROG=/usr/bin/xray
 arg=-c
-CONFIG_FILE=/usr/share/xray/xraycfg.json
-#CONFIG_FILE=/etc/xray/xraycfg.json
+#CONFIG_FILE=/usr/share/xray/xraycfg.json
+CONFIG_FILE=/etc/xray/xraycfg.json
 
 name="xray"
 pid_file="/var/run/$name.pid"
